@@ -80,7 +80,7 @@ else
   read -p "Shall we overwrite existing contents? $olddir/$target [n]" answer
 
   if [[ "${answer:-n}" == "y" ]]; then
-    # do nothing
+    : # do nothing
   else
     read -p "Do you want me to remove/replace it? $olddir/$target [n]" answer
     if [[ "${answer:-n}" == "y" ]]; then
