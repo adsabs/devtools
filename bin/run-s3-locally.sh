@@ -113,7 +113,7 @@ if [ "$?" = "0" ]; then
       if [[ ! -e run-manualy.sh ]]; then
         echo "#!/bin/bash
         docker rm $target
-        $olddir/$target/docker-run.sh  $target $imageid" > run-manually.sh | chmod u+x run-manually.sh
+        $olddir/$target/docker-run.sh  $target $imageid" > run-manually.sh && chmod u+x run-manually.sh
       fi
 
       echo "Executing $olddir/$target/docker-run.sh"
