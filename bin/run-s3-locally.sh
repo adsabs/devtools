@@ -6,6 +6,7 @@ bucket=${EBS_BUCKET:-elasticbeanstalk-us-east-1-084981688622}
 target=`basename $1`
 bucketname=$target
 version=$2
+extra=$3
 
 if [[ "$target" = "" || "$target" = "help" ]]; then
   echo "
@@ -23,8 +24,20 @@ if [[ "$target" = "" || "$target" = "help" ]]; then
 
     Will download the latest version of adsorcid and execute it. The second
     argument serves as a filter. So you can pass any string.
+
+    You should always run this script as 'ads' (UID=102) user. Or add '--force'
+    parameter.
   "
   exit 0
+fi
+
+if [[ "$UID" != "102" ]]; then
+  if [[ "$extra" = "--force" ]]; then
+    echo "Not running as user 'ads' (UID=102); I hope you know what you are doing!"
+  else
+    echo "This script needs to run as 'ads' user (sudo su -l ads) or with --force as 3rd argument"
+    exit 1
+  fi
 fi
 
 
