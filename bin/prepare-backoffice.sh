@@ -9,7 +9,7 @@ echo "Installing some python/system packages"
 sudo apt-get install python-pip python-virtualenv unzip
 
 
-for target in `ls /proj.ads*`; do
+for target in `ls / | grep /proj.ads`; do
   echo "Currently looking into: $target"
 
   mkdir -p $target/backoffice
