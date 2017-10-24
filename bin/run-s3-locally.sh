@@ -117,7 +117,7 @@ unzip -o $s3_file
 docker rm -f $target || true
 
 # build
-docker build -t $target .
+docker build $DOCKER_BUILD_EXTRA -t $target .
 imageid=`docker images -q $target`
 
 if [ "$?" = "0" ]; then
@@ -136,11 +136,11 @@ if [ "$?" = "0" ]; then
       if [[ ! -e run-manualy.sh ]]; then
         echo "#!/bin/bash
         docker rm $target
-        docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/:/var/lib/docker -v /media/shared_folder:/media/shared_folder --name $target $imageid" > run-manually.sh | chmod u+x run-manually.sh
+        docker run $DOCKER_RUN_EXTRA -d -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/:/var/lib/docker -v /media/shared_folder:/media/shared_folder --name $target $imageid" > run-manually.sh | chmod u+x run-manually.sh
       fi
 
       echo "Executing the default docker run sequence"
-      docker run -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/:/var/lib/docker -v /media/shared_folder:/media/shared_folder --name $target $imageid
+      docker run $DOCKER_RUN_EXTRA -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/:/var/lib/docker -v /media/shared_folder:/media/shared_folder --name $target $imageid
     fi
 else
   echo "Failed to build the docker image; exiting"
